@@ -1,0 +1,25 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Хуйня ебаная", "BloodTheme")
+
+--MAIN
+local Tab = Window:NewTab("Негры")
+local Section = Tab:NewSection("Негры")
+
+Section:NewKeybind("Выеби нахуй хуюшку на F ебать", "Toggle GUI", Enum.KeyCode.F, function()
+    Library:ToggleUI()
+end)
+
+
+Section:NewButton("Стать пидорасом со скриптом который ломает игры с R6", "Хуйня которая запускает что-то ебать", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+end)
+
+Section:NewToggle("Баланс этого говна делал whar#6942", "У тебя топ ава", function(state)
+   if state then
+       game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+       game.Players.LocalPlayer.Character.Humanoid.JumpPower = 500
+   else
+       game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+       game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+   end
+end)

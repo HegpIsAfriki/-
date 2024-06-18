@@ -1,4 +1,5 @@
 -- Values
+local Prints = false
 local ESPToggle = false
 local ESPOutline = Color3.fromRGB(120,0,255)
 local ESPFill = Color3.fromRGB(170,0,255)
@@ -18,7 +19,9 @@ Player.Character.HumanoidRootPart.CFrame = SavedP
 end
 -- ESP
 function ESP(Destroybool)
+if Prints then
 print(Destroybool)
+end
 local V2
    if Destroybool then
        V2 = false
@@ -32,21 +35,22 @@ ESPToggle = V2
             print(k)
             if Destroybool then
                 if k:FindFirstChild("ESPHL") then
-                    print(k.ESPHL:GetFullName().." Destroying")
+if Prints then print(k.ESPHL:GetFullName().." Destroying") end
+                    
                     k.ESPHL:Destroy()
                 end
             else
                 if k:FindFirstChild("ESPHL") then
                    k.ESPHL.OutlineColor = ESPOutline
                    k.ESPHL.FillColor = ESPFill
-                   print(k.ESPHL:GetFullName().." Updating")
+                   if Prints then print(k.ESPHL:GetFullName().." Updating") end
                 else
                     local highlight = Instance.new("Highlight")
                     highlight.Parent = k
                     highlight.Name = "ESPHL"
                     highlight.OutlineColor = ESPOutline
                     highlight.FillColor = ESPFill
-                    print(highlight:GetFullName().." Creating")
+                    if Prints then print(highlight:GetFullName().." Creating") end
                 end
             end
         end

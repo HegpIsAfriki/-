@@ -1,0 +1,181 @@
+-- Values
+local ESPToggle = false
+local ESPOutline = Color3.fromRGB(120,0,255)
+local ESPFill = Color3.fromRGB(170,0,255)
+--local ESPOutlineTrans = 
+local Player = game.Players.LocalPlayer
+-- Funtions / Services
+local CAS = game:GetService("ContextActionService")
+-- Tatsumaki
+function TatsuPull()
+Player.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Crushing Pull"))
+Player.Character.Humanoid:UnequipTools()
+local SavedP = Player.Character.HumanoidRootPart.CFrame
+task.wait(0.5)
+Player.Character.HumanoidRootPart.CFrame *= CFrame.new(0,10000000,1000000)
+task.wait(0.5)
+Player.Character.HumanoidRootPart.CFrame = SavedP
+end
+-- ESP
+function ESP(Destroybool)
+print(Destroybool)
+local V2
+   if Destroybool then
+       V2 = false
+    else
+       V2 = true
+   end
+ESPToggle = V2
+    for i,k in pairs(workspace.Live:GetChildren()) do
+        print(k)
+        if k ~= Player.Character and k:FindFirstChild("Humanoid") then
+            print(k)
+            if Destroybool then
+                if k:FindFirstChild("ESPHL") then
+                    print(k.ESPHL:GetFullName().." Destroying")
+                    k.ESPHL:Destroy()
+                end
+            else
+                if k:FindFirstChild("ESPHL") then
+                   k.ESPHL.OutlineColor = ESPOutline
+                   k.ESPHL.FillColor = ESPFill
+                   print(k.ESPHL:GetFullName().." Updating")
+                else
+                    local highlight = Instance.new("Highlight")
+                    highlight.Parent = k
+                    highlight.Name = "ESPHL"
+                    highlight.OutlineColor = ESPOutline
+                    highlight.FillColor = ESPFill
+                    print(highlight:GetFullName().." Creating")
+                end
+            end
+        end
+    end
+end
+function Saver()
+local highlight = Instance.new("Highlight")
+highlight.Parent = k
+highlight.Name = "ESPHL"
+highlight.OutlineColor = ESPOutline
+highlight.FillColor = ESPFill
+end
+-- UI library
+local ArrayField = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/ArrayField/main/Source.lua'))()
+
+local Window = ArrayField:CreateWindow({
+   Name = "The Strongest Battlegrounds",
+   LoadingTitle = "Zeki hub",
+   LoadingSubtitle = "by Zekinelga",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = "ZekiHub", -- Create a custom folder for your hub/game
+      FileName = "The Strongest Battlegrounds"
+   },
+   Discord = {
+      Enabled = false,
+      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided",
+      FileName = "Key", -- It is recommended to use something unique as other scripts using ArrayField may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like ArrayField to get the key from
+      Actions = {
+            [1] = {
+                Text = 'Skibidi Ohio Sigma',
+                OnPress = function()
+                    
+                end,
+                }
+            },
+      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+local Tab = Window:CreateTab("Main", 4483362458)
+local Section = Tab:CreateSection("OneShots",true)
+local Toggle = Tab:CreateToggle({
+   Name = "Tatsumaki pull ( E )",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   if Value then
+    CAS:BindAction("TatsuOneShot",TatsuPull,false,Enum.KeyCode.E)
+    else
+    CAS:UnbindAction("TatsuOneShot")
+   end
+   end,
+})
+local Section = Tab:CreateSection("ESP",true)
+local ColorPicker = Tab:CreateColorPicker({
+    Name = "ESP outline",
+    Color = Color3.fromRGB(120,0,255),
+    Flag = "ColorPicker1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+         ESPOutline = Value
+         if ESPToggle then
+         ESP(false)
+         end
+    end
+})
+local ColorPicker = Tab:CreateColorPicker({
+    Name = "ESP fill",
+    Color = Color3.fromRGB(170,0,255),
+    Flag = "ColorPicker1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+         ESPFill = Value
+         if ESPToggle then
+         ESP(false)
+         end
+    end
+})
+local Toggle = Tab:CreateToggle({
+   Name = "ESP",
+   CurrentValue = false,
+   Flag = "Toggle2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   local V2
+   if Value then
+       V2 = false
+    else
+       V2 = true
+   end
+    ESP(V2)
+   end,
+})
+local Table = {}
+for i,k in pairs(workspace.Live:GetChildren()) do
+if k:FindFirstChild("Humanoid") and k ~= game.Players.LocalPlayer.Character then
+table.insert(Table,k)
+end
+end
+local Dropdown = Tab:CreateDropdown({
+   Name = "Target",
+   Options = Table,
+   CurrentOption = "Select" ,
+   MultiSelection = false, -- If MultiSelections is allowed
+   Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Option)
+   
+   end,
+})
+
+workspace.Live.ChildRemoved:Connect(function(k)
+print(k.Name.." removed")
+if k:FindFirstChild("Humanoid") and k ~= game.Players.LocalPlayer.Character then
+Dropdown:Remove(k)
+end
+end)
+workspace.Live.ChildAdded:Connect(function(k)
+task.wait(1)
+print(k.Name.." added")
+if k:FindFirstChild("Humanoid") and k ~= game.Players.LocalPlayer.Character then
+Dropdown:Add(k)
+if ESPToggle then
+ESP(false)
+end
+end
+end)

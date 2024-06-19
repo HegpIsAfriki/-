@@ -3,6 +3,8 @@ local Prints = false
 local ESPToggle = false
 local ESPOutline = Color3.fromRGB(120,0,255)
 local ESPFill = Color3.fromRGB(170,0,255)
+local ESPOutTrans = 0
+local ESPFillTrans = 0.5
 --local ESPOutlineTrans = 
 local Player = game.Players.LocalPlayer
 -- Funtions / Services
@@ -43,6 +45,8 @@ if Prints then print(k.ESPHL:GetFullName().." Destroying") end
                 if k:FindFirstChild("ESPHL") then
                    k.ESPHL.OutlineColor = ESPOutline
                    k.ESPHL.FillColor = ESPFill
+                   k.ESPHL.OutlineTransparency = ESPOutTrans
+                   k.ESPHL.FillTransparency = ESPFillTrans
                    if Prints then print(k.ESPHL:GetFullName().." Updating") end
                 else
                     local highlight = Instance.new("Highlight")
@@ -50,13 +54,15 @@ if Prints then print(k.ESPHL:GetFullName().." Destroying") end
                     highlight.Name = "ESPHL"
                     highlight.OutlineColor = ESPOutline
                     highlight.FillColor = ESPFill
+                    k.ESPHL.OutlineTransparency = ESPOutTrans
+                   k.ESPHL.FillTransparency = ESPFillTrans
                     if Prints then print(highlight:GetFullName().." Creating") end
                 end
             end
         end
     end
 end
-function Saver()
+function Saved()
 local highlight = Instance.new("Highlight")
 highlight.Parent = k
 highlight.Name = "ESPHL"
@@ -135,6 +141,30 @@ local ColorPicker = Tab:CreateColorPicker({
          ESP(false)
          end
     end
+})
+local Slider = Tab:CreateSlider({
+   Name = "Outline transparency",
+   Range = {0, 1},
+   Increment = 0.1,
+   Suffix = "Transparency",
+   CurrentValue = 0,
+   Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+    ESPOutTrans = Value
+    ESP(false)
+   end,
+})
+local Slider = Tab:CreateSlider({
+   Name = "Fill transparency",
+   Range = {0, 1},
+   Increment = 0.1,
+   Suffix = "Transparency",
+   CurrentValue = 0.5,
+   Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+    ESPFillTrans = Value
+    ESP(false)
+   end,
 })
 local Toggle = Tab:CreateToggle({
    Name = "ESP",

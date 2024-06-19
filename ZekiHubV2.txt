@@ -168,14 +168,18 @@ local Dropdown = Tab:CreateDropdown({
 })
 
 workspace.Live.ChildRemoved:Connect(function(k)
+if Prints then
 print(k.Name.." removed")
+end
 if k:FindFirstChild("Humanoid") and k ~= game.Players.LocalPlayer.Character then
 Dropdown:Remove(k)
 end
 end)
 workspace.Live.ChildAdded:Connect(function(k)
 task.wait(1)
+if Prints then
 print(k.Name.." added")
+end
 if k:FindFirstChild("Humanoid") and k ~= game.Players.LocalPlayer.Character then
 Dropdown:Add(k)
 if ESPToggle then

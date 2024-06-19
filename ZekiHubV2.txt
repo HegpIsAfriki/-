@@ -1,5 +1,4 @@
 -- Values
-local Prints = false
 local ESPToggle = false
 local ESPOutline = Color3.fromRGB(120,0,255)
 local ESPFill = Color3.fromRGB(170,0,255)
@@ -33,13 +32,12 @@ local V2
    end
 ESPToggle = V2
     for i,k in pairs(workspace.Live:GetChildren()) do
-        print(k)
+        if Prints then print(k) end
         if k ~= Player.Character and k:FindFirstChild("Humanoid") then
-            print(k)
+            if Prints then print(k) end
             if Destroybool then
                 if k:FindFirstChild("ESPHL") then
 if Prints then print(k.ESPHL:GetFullName().." Destroying") end
-                    
                     k.ESPHL:Destroy()
                 end
             else

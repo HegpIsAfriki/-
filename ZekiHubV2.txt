@@ -15,7 +15,7 @@ Player.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backp
 Player.Character.Humanoid:UnequipTools()
 local SavedP = Player.Character.HumanoidRootPart.CFrame
 task.wait(0.5)
-Player.Character.HumanoidRootPart.CFrame *= CFrame.new(0,10000000,1000000)
+Player.Character.HumanoidRootPart.CFrame *= CFrame.new(0,1000000000,10000000)
 task.wait(0.5)
 Player.Character.HumanoidRootPart.CFrame = SavedP
 end

@@ -1,5 +1,6 @@
 print("Sus")
 -- Values
+local DCToggle = false
 local ESPToggle = false
 local ESPOutline = Color3.fromRGB(120,0,255)
 local ESPFill = Color3.fromRGB(170,0,255)
@@ -17,7 +18,7 @@ Player.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backp
 Player.Character.Humanoid:UnequipTools()
 local SavedP = Player.Character.HumanoidRootPart.CFrame
 task.wait(0.5)
-Player.Character.HumanoidRootPart.CFrame *= CFrame.new(0,1000000000,10000000)
+Player.Character.HumanoidRootPart.CFrame *= CFrame.new(0,1000000000,1000000000)
 task.wait(0.5)
 Player.Character.HumanoidRootPart.CFrame = SavedP
 end
@@ -72,7 +73,7 @@ highlight.FillColor = ESPFill
 end
 -- Get death counter
 function GetDeathCounter2(Object)
-if Object.Name == "Counter" and Object.Parent ~= Player.Character then
+if Object.Name == "Counter" and Object.Parent ~= Player.Character and DCToggle then
     print(Object:GetFullName())
 CoreGui:SetCore("SendNotification", {
 	Title = "Death Counter";
@@ -212,6 +213,14 @@ table.insert(Table,k)
 end
 end
 local Section = Tab:CreateSection("Others",true)
+local Toggle = Tab:CreateToggle({
+   Name = "Show players with death counter",
+   CurrentValue = false,
+   Flag = "Toggle3", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   DCToggle = Value
+   end,
+})
 local Dropdown = Tab:CreateDropdown({
    Name = "Target",
    Options = Table,

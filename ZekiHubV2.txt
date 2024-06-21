@@ -1,3 +1,4 @@
+print("Sus")
 -- Values
 local ESPToggle = false
 local ESPOutline = Color3.fromRGB(120,0,255)
@@ -9,6 +10,7 @@ local Target = nil
 local Player = game.Players.LocalPlayer
 -- Funtions / Services
 local CAS = game:GetService("ContextActionService")
+local CoreGui = game:GetService("StarterGui")
 -- Tatsumaki
 function TatsuPull()
 Player.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Crushing Pull"))
@@ -72,11 +74,10 @@ end
 function GetDeathCounter2(Object)
 if Object.Name == "Counter" and Object.Parent ~= Player.Character then
     print(Object:GetFullName())
-game:GetService("StarterGui"):SetCore("SendNotification",{
-Title = "Death Counter", -- Required
-Text =  tostring(Object.Parent.Name.." "..math.floor((Object.Parent:FindFirstChild("HumanoidRootPart").Position - Player.Character.HumanoidRootPart.Position).Magnitude).." studs from you"), -- Required
-Duration = 10,
-Icon = "rbxassetid://1234567890" -- Optional
+CoreGui:SetCore("SendNotification", {
+	Title = "Death Counter";
+	Text = tostring(Object.Parent.Name.." "..math.floor((Object.Parent:FindFirstChild("HumanoidRootPart").Position - Player.Character.HumanoidRootPart.Position).Magnitude).." studs from you");
+	Duration = 10;
 })
 end
 end

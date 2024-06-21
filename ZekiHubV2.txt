@@ -61,13 +61,38 @@ if Prints then print(k.ESPHL:GetFullName().." Destroying") end
         end
     end
 end
-function Saved()
+function Saved(k)
 local highlight = Instance.new("Highlight")
 highlight.Parent = k
 highlight.Name = "ESPHL"
 highlight.OutlineColor = ESPOutline
 highlight.FillColor = ESPFill
 end
+-- Get death counter
+function GetDeathCounter2(Object)
+if Object.Name == "Counter" and Object.Parent ~= Player.Character then
+    print(Object:GetFullName())
+game:GetService("StarterGui"):SetCore("SendNotification",{
+Title = "Death Counter", -- Required
+Text =  tostring(Object.Parent.Name.." "..math.floor((Object.Parent:FindFirstChild("HumanoidRootPart").Position - Player.Character.HumanoidRootPart.Position).Magnitude).." studs from you"), -- Required
+Duration = 10,
+Icon = "rbxassetid://1234567890" -- Optional
+})
+end
+end
+-- Checking for death counter
+function Check(Character)
+Character.ChildAdded:Connect(function(k2)
+GetDeathCounter2(k2)
+end)
+end
+-- Anti death counter
+for i,k in pairs(workspace.Live:GetChildren()) do
+Check(k)
+end
+workspace.Live.ChildAdded:Connect(function(Object)
+Check(Object)
+end)
 -- UI library
 local ArrayField = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/ArrayField/main/Source.lua'))()
 

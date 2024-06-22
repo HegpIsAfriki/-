@@ -290,6 +290,6 @@ local Keybind = Tab:CreateKeybind({
    HoldToInteract = false,
    Flag = "Keybind2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Keybind)
-   Player.Charcater.HumanoidRootPart.CFrame = CFrame.new(-8.744277, 652.52124, -377.325531)
+   Player.Character.HumanoidRootPart.CFrame = CFrame.new(-8.744277, 652.52124, -377.325531)
    end,
 })

@@ -7,6 +7,7 @@ local ESPFill = Color3.fromRGB(170,0,255)
 local ESPOutTrans = 0
 local ESPFillTrans = 0.5
 local Target = nil
+local Func
 --local ESPOutlineTrans = 
 local Player = game.Players.LocalPlayer
 -- Funtions / Services
@@ -14,11 +15,15 @@ local CAS = game:GetService("ContextActionService")
 local CoreGui = game:GetService("StarterGui")
 -- Tatsumaki
 function TatsuPull()
+local _CFrame
+if Func == "TatsuOneShot" then
+_CFrame = CFrame.new(0,100000000000,100000000000)
+end
 Player.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Crushing Pull"))
 Player.Character.Humanoid:UnequipTools()
 local SavedP = Player.Character.HumanoidRootPart.CFrame
 task.wait(0.5)
-Player.Character.HumanoidRootPart.CFrame *= CFrame.new(0,1000000000,1000000000)
+Player.Character.HumanoidRootPart.CFrame = _CFrame 
 task.wait(0.5)
 Player.Character.HumanoidRootPart.CFrame = SavedP
 end
@@ -139,6 +144,7 @@ local Toggle = Tab:CreateToggle({
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
    if Value then
+    Func = "TatsuOneShot"
     CAS:BindAction("TatsuOneShot",TatsuPull,false,Enum.KeyCode.E)
     else
     CAS:UnbindAction("TatsuOneShot")
@@ -177,7 +183,9 @@ local Slider = Tab:CreateSlider({
    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
     ESPOutTrans = Value
-    ESP(false)
+    if ESPToggle then
+         ESP(false)
+    end
    end,
 })
 local Slider = Tab:CreateSlider({
@@ -189,7 +197,9 @@ local Slider = Tab:CreateSlider({
    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
     ESPFillTrans = Value
-    ESP(false)
+    if ESPToggle then
+         ESP(false)
+         end
    end,
 })
 local Toggle = Tab:CreateToggle({
@@ -209,7 +219,7 @@ local Toggle = Tab:CreateToggle({
 local Table = {}
 for i,k in pairs(workspace.Live:GetChildren()) do
 if k:FindFirstChild("Humanoid") and k ~= game.Players.LocalPlayer.Character then
-table.insert(Table,k)
+table.insert(Table,k.Name)
 end
 end
 local Section = Tab:CreateSection("Others",true)
@@ -237,7 +247,7 @@ if Prints then
 print(k.Name.." removed")
 end
 if k:FindFirstChild("Humanoid") and k ~= game.Players.LocalPlayer.Character then
-Dropdown:Remove(k)
+Dropdown:Remove(k.Name)
 end
 end)
 workspace.Live.ChildAdded:Connect(function(k)
@@ -246,7 +256,7 @@ if Prints then
 print(k.Name.." added")
 end
 if k:FindFirstChild("Humanoid") and k ~= game.Players.LocalPlayer.Character then
-Dropdown:Add(k)
+Dropdown:Add(k.Name)
 if ESPToggle then
 ESP(false)
 end
@@ -256,6 +266,6 @@ local Button = Tab:CreateButton({
    Name = "Teleport to target",
    Interact = 'Click',
    Callback = function()
-   Player.Character.HumanoidRootPart.CFrame = Target.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+   Player.Character.HumanoidRootPart.CFrame = workspace.Live:FindFirstChild(Target).HumanoidRootPart.CFrame * CFrame.new(0,0,5)
    end,
 })

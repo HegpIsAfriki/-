@@ -33,8 +33,7 @@ task.wait(0.5)
 Player.Character.HumanoidRootPart.CFrame = _CFrame 
 task.wait(0.5)
 --Player.Character.HumanoidRootPart.CFrame = SavedP
-end
-function 
+end 
 -- ESP
 function ESP(Destroybool)
 if Prints then

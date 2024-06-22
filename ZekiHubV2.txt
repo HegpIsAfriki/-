@@ -7,18 +7,14 @@ local ESPFill = Color3.fromRGB(170,0,255)
 local ESPOutTrans = 0
 local ESPFillTrans = 0.5
 local Target = nil
-local Func
 --local ESPOutlineTrans = 
 local Player = game.Players.LocalPlayer
 -- Funtions / Services
 local CAS = game:GetService("ContextActionService")
 local CoreGui = game:GetService("StarterGui")
 -- Tatsumaki
-function TatsuPull()
-local _CFrame
-if Func == "TatsuOneShot" then
-_CFrame = CFrame.new(0,100000000000,100000000000)
-end
+function TatsuPullOneShot()
+local _CFrame = CFrame.new(0,100000000000,100000000000)
 Player.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Crushing Pull"))
 Player.Character.Humanoid:UnequipTools()
 local SavedP = Player.Character.HumanoidRootPart.CFrame
@@ -27,6 +23,18 @@ Player.Character.HumanoidRootPart.CFrame = _CFrame
 task.wait(0.5)
 Player.Character.HumanoidRootPart.CFrame = SavedP
 end
+-- Tatsumaki 2
+function TatsuPullTeleport(CF)
+local _CFrame = CF
+Player.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Crushing Pull"))
+Player.Character.Humanoid:UnequipTools()
+local SavedP = Player.Character.HumanoidRootPart.CFrame
+task.wait(0.5)
+Player.Character.HumanoidRootPart.CFrame = _CFrame 
+task.wait(0.5)
+--Player.Character.HumanoidRootPart.CFrame = SavedP
+end
+function 
 -- ESP
 function ESP(Destroybool)
 if Prints then
@@ -144,8 +152,7 @@ local Toggle = Tab:CreateToggle({
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
    if Value then
-    Func = "TatsuOneShot"
-    CAS:BindAction("TatsuOneShot",TatsuPull,false,Enum.KeyCode.E)
+    CAS:BindAction("TatsuOneShot",TatsuPullOneShot,false,Enum.KeyCode.E)
     else
     CAS:UnbindAction("TatsuOneShot")
    end
@@ -267,5 +274,23 @@ local Button = Tab:CreateButton({
    Interact = 'Click',
    Callback = function()
    Player.Character.HumanoidRootPart.CFrame = workspace.Live:FindFirstChild(Target).HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+   end,
+})
+local Keybind = Tab:CreateKeybind({
+   Name = "Mountain",
+   CurrentKeybind = "Z",
+   HoldToInteract = false,
+   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Keybind)
+   TatsuPullTeleport(CFrame.new(-8.744277, 652.52124, -377.325531))
+   end,
+})
+local Keybind = Tab:CreateKeybind({
+   Name = "Mountain ( Solo )",
+   CurrentKeybind = "X",
+   HoldToInteract = false,
+   Flag = "Keybind2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Keybind)
+   Player.Charcater.HumanoidRootPart.CFrame = CFrame.new(-8.744277, 652.52124, -377.325531)
    end,
 })
